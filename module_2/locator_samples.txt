@@ -1,0 +1,5 @@
+input#name
+//input[@name="surname"]
+input.third
+//input[@cust_attr="4"]
+//input[@class="form-control second"]
