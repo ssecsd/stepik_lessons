@@ -1,4 +1,3 @@
-#readme.md is for well-formatted test-plan
 
 Страница 1 – http://selenium1py.pythonanywhere.com/ru
  -  Переключения языка 1.1
