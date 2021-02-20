@@ -3,10 +3,10 @@ import time
 
 link = "http://suninjuly.github.io/simple_form_find_task.html"
 
-try:
-    browser = webdriver.Chrome()
-    browser.get(link)
+browser = webdriver.Chrome()
+browser.get(link)
 
+try:
     input1 = browser.find_element_by_tag_name('input')
     input1.send_keys("Ivan")
     input2 = browser.find_element_by_name('last_name')

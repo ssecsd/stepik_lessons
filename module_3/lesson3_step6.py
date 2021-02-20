@@ -4,10 +4,10 @@ from time import sleep
 
 link = 'http://suninjuly.github.io/get_attribute.html'
 
-try:
-    browser = webdriver.Chrome()
-    browser.get(link)
+browser = webdriver.Chrome()
+browser.get(link)
 
+try:
     x = browser.find_element_by_id('treasure').get_attribute('valuex')
     answer = log(abs(12*sin(int(x))))
     browser.find_element_by_id('answer').send_keys(str(answer))

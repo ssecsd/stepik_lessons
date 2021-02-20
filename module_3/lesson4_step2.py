@@ -5,10 +5,10 @@ from time import sleep
 
 link = 'http://suninjuly.github.io/selects2.html'
 
-try:
-    browser = webdriver.Chrome()
-    browser.get(link)
+browser = webdriver.Chrome()
+browser.get(link)
 
+try:
     num1 = int(browser.find_element_by_id('num1').text)
     num2 = int(browser.find_element_by_id('num2').text)
     print(num1, num2)

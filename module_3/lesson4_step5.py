@@ -4,10 +4,10 @@ from time import sleep
 
 link = 'http://suninjuly.github.io/execute_script.html'
 
-try:
-    browser = webdriver.Chrome()
-    browser.get(link)
+browser = webdriver.Chrome()
+browser.get(link)
 
+try:
     x = browser.find_element_by_id('input_value').text
     print(x)
     answer = log(abs(12*sin(int(x))))

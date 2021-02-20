@@ -3,11 +3,12 @@ import time
 
 link = "http://suninjuly.github.io/find_xpath_form"
 
-try:
-    browser = webdriver.Chrome()
-    browser.get(link)
+browser = webdriver.Chrome()
+browser.get(link)
 
-    input1 = browser.find_element_by_tag_name('input')
+try:
+
+    input1 = browser.find_element_by_tag_name('inptut')
     input1.send_keys("Ivan")
     input2 = browser.find_element_by_name('last_name')
     input2.send_keys("Petrov")
