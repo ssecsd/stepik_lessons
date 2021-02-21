@@ -25,7 +25,6 @@ def test_register_new_user():
     """-- Регистрация пользователя - зарегистрироваться 2.1.5"""
     # Data
     reg_success_message = 'Спасибо за регистрацию!'
-    result_page_title = 'Oscar - Sandbox'
 
     try:
         # Arrange
@@ -90,15 +89,15 @@ def test_user_login_delete_user():
 
         # Act
         delete_button1.click()
-        password_confrim = browser.find_element_by_css_selector(logged_delete_password_input_locator)
+        password_confirm = browser.find_element_by_css_selector(logged_delete_password_input_locator)
         delete_button2 = browser.find_element_by_css_selector(logged_delete_confirm_locator)
-        password_confrim.send_keys(user_password)
+        password_confirm.send_keys(user_password)
         delete_button2.click()
 
         # Assert
         del_success = browser.find_element_by_css_selector(alert_locator)
         assert main_page_link == browser.current_url, 'Unexpected redirect'
-        assert deleted_message in del_success.text, 'No deletion sucess message'
+        assert deleted_message in del_success.text, 'No deletion success message'
 
     finally:
         browser.quit()
