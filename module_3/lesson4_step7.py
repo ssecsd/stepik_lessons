@@ -1,6 +1,7 @@
-from selenium import webdriver
 from os import path
 from time import sleep
+
+from selenium import webdriver
 
 current_dir = path.abspath(path.dirname(__file__))
 file_path = path.join(current_dir, 'test.txt')

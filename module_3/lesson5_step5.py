@@ -1,6 +1,7 @@
-from selenium import webdriver
-from time import sleep
 from math import log, sin
+from time import sleep
+
+from selenium import webdriver
 
 link = "http://suninjuly.github.io/redirect_accept.html"
 
@@ -12,7 +13,7 @@ try:
     browser.switch_to.window(browser.window_handles[1])
 
     x = browser.find_element_by_id("input_value").text
-    answer = log(abs(12*sin(int(x))))
+    answer = log(abs(12 * sin(int(x))))
     captcha = browser.find_element_by_id('answer')
     captcha.send_keys(str(answer))
     button = browser.find_element_by_tag_name('button')
@@ -21,5 +22,3 @@ try:
 except:
     sleep(30)
     browser.quit()
-
-

@@ -1,6 +1,7 @@
-from selenium import webdriver
-from time import sleep
 from math import log, sin
+from time import sleep
+
+from selenium import webdriver
 
 link = "http://suninjuly.github.io/alert_accept.html"
 
@@ -13,7 +14,7 @@ try:
 
     x = browser.find_element_by_id("input_value").text
     print(x)
-    answer = log(abs(12*sin(int(x))))
+    answer = log(abs(12 * sin(int(x))))
     print(answer)
     captcha = browser.find_element_by_id('answer')
     captcha.send_keys(str(answer))
@@ -23,5 +24,3 @@ try:
 except:
     sleep(30)
     browser.quit()
-
-

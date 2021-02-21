@@ -1,6 +1,7 @@
-from selenium import webdriver
 import math
 from time import sleep
+
+from selenium import webdriver
 
 link = "http://suninjuly.github.io/math.html"
 
@@ -10,7 +11,7 @@ browser.get(link)
 try:
     x = browser.find_element_by_id("input_value").text
     print(x)
-    answer = math.log(abs(12*math.sin(int(x))))
+    answer = math.log(abs(12 * math.sin(int(x))))
     print(answer)
     captcha = browser.find_element_by_id('answer')
     captcha.send_keys(str(answer))
