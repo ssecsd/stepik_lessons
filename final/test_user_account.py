@@ -1,141 +1,106 @@
-from selenium import webdriver
-
-# Data
-main_page_link = 'http://selenium1py.pythonanywhere.com/ru/'
-login_page_link = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
-profile_page_link = 'http://selenium1py.pythonanywhere.com/ru/accounts/profile/'
-
-alert_locator = '.alertinner'
-
-reg_email_locator = '[name=registration-email]'
-reg_password1_locator = '[name=registration-password1]'
-reg_password2_locator = '[name=registration-password2]'
-reg_button_locator = '[name=registration_submit]'
-
-login_email_locator = '[name=login-username]'
-login_password_locator = '[name=login-password]'
-login_button_locator = '[name=login_submit]'
-
-user_email = 'test_account_profile@example.com'
-user_password = 'Pa$$w0rd!!!'
-# TBD randomize email to avoid conflicts
+from random import randint
+from conftest import user_email, user_password
+from locators import Locator, Link
 
 
-def test_register_new_user():
+def login(browser, email, password):
+
+    browser.get(Link.login_page)
+    email_field = browser.find_element(*Locator.login_email)
+    password_field = browser.find_element(*Locator.login_password)
+    log_button = browser.find_element(*Locator.login_button)
+    email_field.send_keys(email)
+    password_field.send_keys(password)
+    log_button.click()
+
+
+def test_register_new_user(browser):
     """-- Регистрация пользователя - зарегистрироваться 2.1.5"""
-    # Data
-    reg_success_message = 'Спасибо за регистрацию!'
+    # Arrange
+    browser.get(Link.login_page)
+    email_field = browser.find_element(*Locator.reg_email)
+    reg_password = browser.find_element(*Locator.reg_password)
+    reg_password_repeat = browser.find_element(*Locator.reg_repeat_password)
+    reg_button = browser.find_element(*Locator.reg_button)
 
-    try:
-        # Arrange
-        browser = webdriver.Chrome()
-        browser.implicitly_wait(5)
-        browser.get(login_page_link)
+    # Act
+    email_field.send_keys(user_email)
+    reg_password.send_keys(user_password)
+    reg_password_repeat.send_keys(user_password)
+    reg_button.click()
 
-        email = browser.find_element_by_css_selector(reg_email_locator)
-        reg_password1 = browser.find_element_by_css_selector(reg_password1_locator)
-        reg_password2 = browser.find_element_by_css_selector(reg_password2_locator)
-        reg_button = browser.find_element_by_css_selector(reg_button_locator)
+    # Assert
+    logout_icon = browser.find_element(*Locator.logout_icon)
+    profile_icon = browser.find_element(*Locator.profile_icon)
 
-        # Act
-        email.send_keys(user_email)
-        reg_password1.send_keys(user_password)
-        reg_password2.send_keys(user_password)
-        reg_button.click()
-
-        # Assert
-        reg_success = browser.find_element_by_css_selector(alert_locator)
-        assert main_page_link == browser.current_url, 'Unexpected redirect'
-        assert reg_success_message == reg_success.text, 'No success message'
-
-    finally:
-        browser.quit()
+    assert logout_icon and profile_icon, 'User not logged in'
 
 
-def test_user_login_delete_user():
+def test_user_login(browser):
     """ -- Успешный логин 2.2.2"""
+    # Arrange
+    browser.get(Link.login_page)
+    email_field = browser.find_element(*Locator.login_email)
+    password_field = browser.find_element(*Locator.login_password)
+    log_button = browser.find_element(*Locator.login_button)
+
+    # Act
+    email_field.send_keys(user_email)
+    password_field.send_keys(user_password)
+    log_button.click()
+
+    # Assert
+    logout_icon = browser.find_element(*Locator.logout_icon)
+    profile_icon = browser.find_element(*Locator.profile_icon)
+    assert logout_icon and profile_icon, 'User not logged in'
+
+
+def test_delete_user(browser):
     """ -- Удаление пользователя 2.1.6"""
-    # TBD Two checks in one test -> rewrite. Now it's teardown-like
-    # Data
-    logged_delete_user_locator = '[id=delete_profile]'
-    logged_delete_password_input_locator = '[id=id_password]'
-    logged_delete_confirm_locator = '.btn-danger'
 
-    deleted_message = 'Ваш профиль удален. Спасибо, что воспользовались нашим сайтом.'
+    # Arrange
+    login(browser, user_email, user_password)
+    # Act
 
-    try:
-        # Login test
-        # Arrange
-        browser = webdriver.Chrome()
-        browser.implicitly_wait(5)
-        browser.get(login_page_link)
+    browser.get(Link.profile_page)
+    delete_button = browser.find_element(*Locator.logged_delete_user)
 
-        email = browser.find_element_by_css_selector(login_email_locator)
-        password = browser.find_element_by_css_selector(login_password_locator)
-        log_button = browser.find_element_by_css_selector(login_button_locator)
+    # Act
+    delete_button.click()
+    password_confirm = browser.find_element(*Locator.logged_delete_password_input)
+    delete_confirm_button = browser.find_element(*Locator.logged_delete_confirm)
+    password_confirm.send_keys(user_password)
+    delete_confirm_button.click()
+    login(browser, user_email, user_password)
 
-        # Act
-        email.send_keys(user_email)
-        password.send_keys(user_password)
-        log_button.click()
+    # Assert
+    signin_icon = browser.find_element(*Locator.signin_icon)
 
-        # Assert
-        assert main_page_link == browser.current_url
+    assert signin_icon, 'User logged in'
 
-        # Delete user test
-        # Arrange
-        browser.get(profile_page_link)
-        delete_button1 = browser.find_element_by_css_selector(logged_delete_user_locator)
-
-        # Act
-        delete_button1.click()
-        password_confirm = browser.find_element_by_css_selector(logged_delete_password_input_locator)
-        delete_button2 = browser.find_element_by_css_selector(logged_delete_confirm_locator)
-        password_confirm.send_keys(user_password)
-        delete_button2.click()
-
-        # Assert
-        del_success = browser.find_element_by_css_selector(alert_locator)
-        assert main_page_link == browser.current_url, 'Unexpected redirect'
-        assert deleted_message in del_success.text, 'No deletion success message'
-
-    finally:
-        browser.quit()
-
-
-def test_email_validation():
+def test_email_validation(browser):
     # TBD Parametrize it
     # Data
     user_wrong_email = 'test@example'
     wrong_email_alert_locator = '#register_form .error-block'
 
-    try:
-        browser = webdriver.Chrome()
-        browser.implicitly_wait(5)
-        browser.get(login_page_link)
+    browser.get(Link.login_page)
 
-        # Arrange
-        email = browser.find_element_by_css_selector(reg_email_locator)
-        reg_password1 = browser.find_element_by_css_selector(reg_password1_locator)
-        reg_password2 = browser.find_element_by_css_selector(reg_password2_locator)
-        reg_button = browser.find_element_by_css_selector(reg_button_locator)
+    # Arrange
+    email = browser.find_element(*Locator.reg_email)
+    reg_password = browser.find_element(*Locator.reg_password)
+    reg_password_repeat = browser.find_element(*Locator.reg_repeat_password)
+    reg_button = browser.find_element(*Locator.reg_button)
 
-        # Act
-        email.send_keys(user_wrong_email)
-        reg_password1.send_keys(user_password)
-        reg_password2.send_keys(user_password)
-        reg_button.click()
+    # Act
+    email.send_keys(user_wrong_email)
+    reg_password.send_keys(user_password)
+    reg_password_repeat.send_keys(user_password)
+    reg_button.click()
 
-        # Assert
-        reg_failed_notification = browser.find_element_by_css_selector(wrong_email_alert_locator)
-        assert login_page_link == browser.current_url, 'Registered with incorrect email or wrong redirect'
-        assert reg_failed_notification, 'No error-block'
+    # Assert
+    signin_icon = browser.find_element(*Locator.signin_icon)
+    reg_error = browser.find_element(*Locator.reg_error)
 
-    finally:
-        browser.quit()
-
-
-if __name__ == '__main__':
-    test_register_new_user()
-    test_user_login_delete_user()
-    test_email_validation()
+    assert signin_icon, 'Account be created with weak password'
+    assert reg_error, 'No error on incorrect password'
