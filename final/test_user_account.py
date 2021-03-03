@@ -1,9 +1,17 @@
-from random import randint
-from conftest import user_email, user_password
 from locators import Locator, Link
+from random import randint
 
 
-def login(browser, email, password):
+def get_email_password():
+    user_email = f'test_email{randint(0, 99999)}@example.com'
+    user_password = 'Pa$$w0rd!!!'
+    return user_email, user_password
+
+def logout(browser):
+    browser.find_element(*Locator.logout_link).click()
+
+
+def login_user(browser, email, password):
 
     browser.get(Link.login_page)
     email_field = browser.find_element(*Locator.login_email)
@@ -14,20 +22,26 @@ def login(browser, email, password):
     log_button.click()
 
 
+def register_new_user(browser, email, password):
+
+    browser.get(Link.login_page)
+    email_field = browser.find_element(*Locator.reg_email)
+    reg_password_field = browser.find_element(*Locator.reg_password)
+    reg_password_repeat_field = browser.find_element(*Locator.reg_repeat_password)
+    reg_button = browser.find_element(*Locator.reg_button)
+
+    email_field.send_keys(email)
+    reg_password_field.send_keys(password)
+    reg_password_repeat_field.send_keys(password)
+    reg_button.click()
+
+
 def test_register_new_user(browser):
     """-- Регистрация пользователя - зарегистрироваться 2.1.5"""
     # Arrange
-    browser.get(Link.login_page)
-    email_field = browser.find_element(*Locator.reg_email)
-    reg_password = browser.find_element(*Locator.reg_password)
-    reg_password_repeat = browser.find_element(*Locator.reg_repeat_password)
-    reg_button = browser.find_element(*Locator.reg_button)
-
+    user_email, user_password = get_email_password()
     # Act
-    email_field.send_keys(user_email)
-    reg_password.send_keys(user_password)
-    reg_password_repeat.send_keys(user_password)
-    reg_button.click()
+    register_new_user(browser, user_email, user_password)
 
     # Assert
     logout_icon = browser.find_element(*Locator.logout_icon)
@@ -39,15 +53,12 @@ def test_register_new_user(browser):
 def test_user_login(browser):
     """ -- Успешный логин 2.2.2"""
     # Arrange
-    browser.get(Link.login_page)
-    email_field = browser.find_element(*Locator.login_email)
-    password_field = browser.find_element(*Locator.login_password)
-    log_button = browser.find_element(*Locator.login_button)
+    user_email, user_password = get_email_password()
+    register_new_user(browser, user_email, user_password)
+    logout(browser)
 
     # Act
-    email_field.send_keys(user_email)
-    password_field.send_keys(user_password)
-    log_button.click()
+    login_user(browser, user_email, user_password)
 
     # Assert
     logout_icon = browser.find_element(*Locator.logout_icon)
@@ -59,7 +70,9 @@ def test_delete_user(browser):
     """ -- Удаление пользователя 2.1.6"""
 
     # Arrange
-    login(browser, user_email, user_password)
+    user_email, user_password = get_email_password()
+    register_new_user(browser, user_email, user_password)
+    # login_user(browser, user_email, user_password)
     # Act
 
     browser.get(Link.profile_page)
@@ -71,36 +84,27 @@ def test_delete_user(browser):
     delete_confirm_button = browser.find_element(*Locator.logged_delete_confirm)
     password_confirm.send_keys(user_password)
     delete_confirm_button.click()
-    login(browser, user_email, user_password)
+    login_user(browser, user_email, user_password)
 
     # Assert
     signin_icon = browser.find_element(*Locator.signin_icon)
 
     assert signin_icon, 'User logged in'
 
+
 def test_email_validation(browser):
     # TBD Parametrize it
     # Data
-    user_wrong_email = 'test@example'
-    wrong_email_alert_locator = '#register_form .error-block'
-
-    browser.get(Link.login_page)
-
-    # Arrange
-    email = browser.find_element(*Locator.reg_email)
-    reg_password = browser.find_element(*Locator.reg_password)
-    reg_password_repeat = browser.find_element(*Locator.reg_repeat_password)
-    reg_button = browser.find_element(*Locator.reg_button)
+    user_email, user_password = get_email_password()
+    # Make password invalid
+    user_password = 'test@example'
 
     # Act
-    email.send_keys(user_wrong_email)
-    reg_password.send_keys(user_password)
-    reg_password_repeat.send_keys(user_password)
-    reg_button.click()
+    register_new_user(browser, user_password, user_password)
 
     # Assert
     signin_icon = browser.find_element(*Locator.signin_icon)
     reg_error = browser.find_element(*Locator.reg_error)
 
-    assert signin_icon, 'Account be created with weak password'
+    assert signin_icon, 'Account was created with weak password'
     assert reg_error, 'No error on incorrect password'

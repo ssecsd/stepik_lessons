@@ -7,6 +7,8 @@ class Locator:
     profile_icon = (By.CSS_SELECTOR, '.icon-user')
     signin_icon = (By.CSS_SELECTOR, '.icon-signin')
 
+    logout_link = (By.CSS_SELECTOR, '#logout_link')
+
     # Login/register page fields
     reg_email = (By.CSS_SELECTOR, '[name=registration-email]')
     reg_password = (By.CSS_SELECTOR, '[name=registration-password1]')

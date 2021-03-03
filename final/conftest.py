@@ -1,11 +1,6 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from random import randint
-
-#Used to store credentials across all test scenarios
-user_email = f'test_email{randint(0, 9999)}@example.com'
-user_password = 'Pa$$w0rd!!!'
 
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default='ru',
