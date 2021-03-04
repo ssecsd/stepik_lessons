@@ -25,3 +25,4 @@ def browser(request):
         raise pytest.UsageError('--browser_name unrecognized or language is incorrect')
     yield browser
     browser.quit()
+

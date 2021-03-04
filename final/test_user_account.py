@@ -7,7 +7,9 @@ def get_email_password():
     user_password = 'Pa$$w0rd!!!'
     return user_email, user_password
 
+
 def logout(browser):
+
     browser.find_element(*Locator.logout_link).click()
 
 

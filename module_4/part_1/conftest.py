@@ -10,11 +10,10 @@ def pytest_addoption(parser):
                      help='Select: chrome or firefox')
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 def browser(request):
     browser_name = request.config.getoption('browser_name')
     user_language = request.config.getoption('language')
-    browser = None
     if browser_name == 'chrome':
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
@@ -24,6 +23,12 @@ def browser(request):
         fp.set_preference('intl.accept_languages', user_language)
         browser = webdriver.Firefox(firefox_profile=fp)
     else:
-        raise pytest.UsageError('--browser_name unrecognized or language is incorrect')
+        raise pytest.UsageError('--browser_name unrecognized')
     yield browser
     browser.quit()
+
+
+@pytest.fixture(scope='function')
+def user_language(request):
+    user_language = request.config.getoption('language')
+    yield user_language
