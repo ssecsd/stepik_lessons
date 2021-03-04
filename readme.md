@@ -1,1 +1,1 @@
-Hi, this is my repo for tests
+Stepik Python UI-Tests Automation course
