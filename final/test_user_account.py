@@ -1,5 +1,6 @@
 from locators import Locator, Link
 from random import randint
+import warnings
 
 
 def get_email_password():
@@ -8,18 +9,24 @@ def get_email_password():
     return user_email, user_password
 
 def logout(browser):
-    browser.find_element(*Locator.logout_link).click()
+    try:
+        browser.find_element(*Locator.logout_link).click()
+    except:
+        warnings.warn('User was not logged in')
 
 
 def login_user(browser, email, password):
 
     browser.get(Link.login_page)
-    email_field = browser.find_element(*Locator.login_email)
-    password_field = browser.find_element(*Locator.login_password)
-    log_button = browser.find_element(*Locator.login_button)
-    email_field.send_keys(email)
-    password_field.send_keys(password)
-    log_button.click()
+    try:
+        email_field = browser.find_element(*Locator.login_email)
+        password_field = browser.find_element(*Locator.login_password)
+        log_button = browser.find_element(*Locator.login_button)
+        email_field.send_keys(email)
+        password_field.send_keys(password)
+        log_button.click()
+    except:
+        warnings.warn('User was logged in already')
 
 
 def register_new_user(browser, email, password):
@@ -63,6 +70,7 @@ def test_user_login(browser):
     # Assert
     logout_icon = browser.find_element(*Locator.logout_icon)
     profile_icon = browser.find_element(*Locator.profile_icon)
+
     assert logout_icon and profile_icon, 'User not logged in'
 
 
