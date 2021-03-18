@@ -1,7 +1,9 @@
 from selenium.webdriver.common.by import By
 
+
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, '#login_link')
+
 
 class LoginPageLocators():
     REG_MAIL = (By.CSS_SELECTOR, '[name=registration-email]')
@@ -11,3 +13,14 @@ class LoginPageLocators():
     LOGIN_MAIL = (By.CSS_SELECTOR, '[name=login-username]')
     LOGIN_PASSWORD = (By.CSS_SELECTOR, '[name=login-password]')
     LOGIN_BUTTON = (By.CSS_SELECTOR, '[name=login_submit]')
+
+
+class ProductPageLocators():
+    ADD_TO_BASKET = (By.CSS_SELECTOR, '.btn-add-to-basket')
+    PRODUCT_NAME = (By.CSS_SELECTOR, '.product_main h1')
+    PRICE = (By.CSS_SELECTOR, '.price_color')
+    # TODO: Rework. It's based on alerts order that may change
+    BASKET_SUCCESS_ALERT = (By.CSS_SELECTOR, '#messages .alert:nth-child(1)')
+    BASKET_TOTAL_ALERT = (By.CSS_SELECTOR, '#messages .alert:nth-child(3)')
+    VIEW_BASKET_FROM_ALERT = (By.CSS_SELECTOR, '.alertinner p a:nth-child(1)')
+    CHECKOUT_NOW_FROM_ALERT = (By.CSS_SELECTOR, '.alertinner p a:nth-child(2)')

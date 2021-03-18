@@ -18,7 +18,7 @@ class Locator:
     login_password = (By.CSS_SELECTOR, '[name=login-password]')
     login_button = (By.CSS_SELECTOR, '[name=login_submit]')
 
-    #Login/register page alerts
+    # Login/register page alerts
     reg_alert = (By.CSS_SELECTOR, '#register_form>.alert-danger')
     reg_error = (By.CSS_SELECTOR, '#register_form>.has-error .error-block')
 
