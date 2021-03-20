@@ -1,7 +1,9 @@
+import math
+
+from selenium.common.exceptions import NoAlertPresentException
+
 from .base_page import BasePage
 from .locators import ProductPageLocators
-from selenium.common.exceptions import NoAlertPresentException
-import math
 
 
 class ProductPage(BasePage):
@@ -22,8 +24,8 @@ class ProductPage(BasePage):
             f'Alert product name not the same as page product name \n {self.browser.current_url}'
 
     def check_product_and_basket_price_same(self):
-        assert self.get_basket_price() == self.get_product_price(), f'Basket price and product price are not the same \n' \
-                                                                    f' {self.browser.current_url}'
+        assert self.get_basket_price() == self.get_product_price(), f'Basket price and product price are not the same' \
+                                                                    f'\n {self.browser.current_url}'
 
     def get_product_name(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
@@ -43,7 +45,11 @@ class ProductPage(BasePage):
 
     def should_not_be_success_message(self):
         assert self.is_not_element_present(*ProductPageLocators.BASKET_SUCCESS_ALERT), \
-            "Success message is presented, but should not be"
+            'Success message is presented, but should not be'
+
+    def should_dissapear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.BASKET_SUCCESS_ALERT), \
+            'Success message was presented, but dissapeared'
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert

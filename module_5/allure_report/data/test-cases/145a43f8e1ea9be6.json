@@ -1,0 +1,112 @@
+{
+  "uid" : "145a43f8e1ea9be6",
+  "name" : "test_guest_can_add_product_to_basket[offer7]",
+  "fullName" : "module_5.test_product_page.TestProductPage#test_guest_can_add_product_to_basket",
+  "historyId" : "8433857a769ecd2ca3eba03399b040cb",
+  "time" : {
+    "start" : 1616237281131,
+    "stop" : 1616237283512,
+    "duration" : 2381
+  },
+  "status" : "skipped",
+  "statusMessage" : "XFAIL\n\nAssertionError: Alert product name not the same as page product name \n http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer7",
+  "statusTrace" : "self = <module_5.test_product_page.TestProductPage object at 0x000002D1121BE188>, browser = <selenium.webdriver.chrome.webdriver.WebDriver (session=\"b35516f4e8b1c3da58079781a725ab0b\")>\npromo_offer = 'offer7'\n\n    @pytest.mark.parametrize('promo_offer',\n                             [\"offer0\", \"offer1\", \"offer2\", \"offer3\", \"offer4\", \"offer5\", \"offer6\",\n                              pytest.param(\"offer7\", marks=pytest.mark.xfail),\n                              \"offer8\", \"offer9\"])\n    def test_guest_can_add_product_to_basket(self, browser, promo_offer):\n        link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'\n        promo_link = '?promo='\n    \n        page = ProductPage(browser, link + promo_link + promo_offer)\n        page.open()\n        page.add_to_basket()\n        page.solve_quiz_and_get_code()\n        page.check_success_alert_present()\n>       page.check_product_and_alert_same()\n\nmodule_5\\test_product_page.py:22: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <module_5.pages.product_page.ProductPage object at 0x000002D11245D1C8>\n\n    def check_product_and_alert_same(self):\n        assert self.get_product_name() == self.get_basket_product_name(), \\\n>           f'Alert product name not the same as page product name \\n {self.browser.current_url}'\nE       AssertionError: Alert product name not the same as page product name \nE        http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer7\n\nmodule_5\\pages\\product_page.py:24: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "browser",
+    "time" : {
+      "start" : 1616237280116,
+      "stop" : 1616237281130,
+      "duration" : 1014
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "stepsCount" : 0,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "skipped",
+    "statusMessage" : "XFAIL\n\nAssertionError: Alert product name not the same as page product name \n http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer7",
+    "statusTrace" : "self = <module_5.test_product_page.TestProductPage object at 0x000002D1121BE188>, browser = <selenium.webdriver.chrome.webdriver.WebDriver (session=\"b35516f4e8b1c3da58079781a725ab0b\")>\npromo_offer = 'offer7'\n\n    @pytest.mark.parametrize('promo_offer',\n                             [\"offer0\", \"offer1\", \"offer2\", \"offer3\", \"offer4\", \"offer5\", \"offer6\",\n                              pytest.param(\"offer7\", marks=pytest.mark.xfail),\n                              \"offer8\", \"offer9\"])\n    def test_guest_can_add_product_to_basket(self, browser, promo_offer):\n        link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'\n        promo_link = '?promo='\n    \n        page = ProductPage(browser, link + promo_link + promo_offer)\n        page.open()\n        page.add_to_basket()\n        page.solve_quiz_and_get_code()\n        page.check_success_alert_present()\n>       page.check_product_and_alert_same()\n\nmodule_5\\test_product_page.py:22: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <module_5.pages.product_page.ProductPage object at 0x000002D11245D1C8>\n\n    def check_product_and_alert_same(self):\n        assert self.get_product_name() == self.get_basket_product_name(), \\\n>           f'Alert product name not the same as page product name \\n {self.browser.current_url}'\nE       AssertionError: Alert product name not the same as page product name \nE        http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer7\n\nmodule_5\\pages\\product_page.py:24: AssertionError",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "cd83e8159a760650",
+      "name" : "stdout",
+      "source" : "cd83e8159a760650.txt",
+      "type" : "text/plain",
+      "size" : 26
+    } ],
+    "parameters" : [ ],
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : true,
+    "stepsCount" : 0,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "browser::0",
+    "time" : {
+      "start" : 1616237283552,
+      "stop" : 1616237285602,
+      "duration" : 2050
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "stepsCount" : 0,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "tag",
+    "value" : "@pytest.mark.xfail"
+  }, {
+    "name" : "parentSuite",
+    "value" : "module_5"
+  }, {
+    "name" : "suite",
+    "value" : "test_product_page"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestProductPage"
+  }, {
+    "name" : "host",
+    "value" : "PC"
+  }, {
+    "name" : "thread",
+    "value" : "25188-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "module_5.test_product_page"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "promo_offer",
+    "value" : "'offer7'"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ "@pytest.mark.xfail" ]
+  },
+  "source" : "145a43f8e1ea9be6.json",
+  "parameterValues" : [ "'offer7'" ]
+}

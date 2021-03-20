@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -24,8 +26,10 @@ def browser(request):
         fp.set_preference('intl.accept_languages', user_language)
         browser = webdriver.Firefox(firefox_profile=fp)
     else:
-        raise pytest.UsageError('--browser_name unrecognized')
+        raise pytest.UsageError(f'--browser_name {browser_name} not supported')
     yield browser
+    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    # browser.save_screenshot(f'screentshot-{now}.png')
     browser.quit()
 
 
