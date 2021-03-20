@@ -1,11 +1,17 @@
 from selenium.webdriver.common.by import By
 
 
-class MainPageLocators():
-    LOGIN_LINK = (By.CSS_SELECTOR, '#login_link')
+class BasePageLocators:
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
 
 
-class LoginPageLocators():
+class MainPageLocators(BasePageLocators):
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)
+
+
+class LoginPageLocators(BasePageLocators):
     REG_MAIL = (By.CSS_SELECTOR, '[name=registration-email]')
     REG_PASSWORD = (By.CSS_SELECTOR, '[name=registration-password1]')
     REG_REPEAT_PASSWORD = (By.CSS_SELECTOR, '[name=registration-password2]')
@@ -15,7 +21,7 @@ class LoginPageLocators():
     LOGIN_BUTTON = (By.CSS_SELECTOR, '[name=login_submit]')
 
 
-class ProductPageLocators():
+class ProductPageLocators(BasePageLocators):
     ADD_TO_BASKET = (By.CSS_SELECTOR, '.btn-add-to-basket')
     PRODUCT_NAME = (By.CSS_SELECTOR, '.product_main h1')
     PRICE = (By.CSS_SELECTOR, '.product_main .price_color')

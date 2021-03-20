@@ -13,6 +13,18 @@ class ProductPage(BasePage):
         add_to_basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET)
         add_to_basket_button.click()
 
+    def check_success_alert_present(self):
+        assert self.is_element_present(*ProductPageLocators.BASKET_SUCCESS_ALERT), \
+            f'No success basket alert \n \n {self.browser.current_url}'
+
+    def check_product_and_alert_same(self):
+        assert self.get_product_name() == self.get_basket_product_name(), \
+            f'Alert product name not the same as page product name \n {self.browser.current_url}'
+
+    def check_product_and_basket_price_same(self):
+        assert self.get_basket_price() == self.get_product_price(), f'Basket price and product price are not the same \n' \
+                                                                    f' {self.browser.current_url}'
+
     def get_product_name(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
         return product_name.text
@@ -29,17 +41,9 @@ class ProductPage(BasePage):
         basket_price = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE).text
         return basket_price
 
-    def check_success_alert_present(self):
-        assert self.is_element_present(*ProductPageLocators.BASKET_SUCCESS_ALERT), \
-            f'No success basket alert \n \n {self.browser.current_url}'
-
-    def check_product_and_alert_same(self):
-        assert self.get_product_name() == self.get_basket_product_name(), \
-            f'Alert product name not the same as page product name \n {self.browser.current_url}'
-
-    def check_product_and_basket_price_same(self):
-        assert self.get_basket_price() == self.get_product_price(), f'Basket price and product price are not the same \n' \
-                                                                    f' {self.browser.current_url}'
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.BASKET_SUCCESS_ALERT), \
+            "Success message is presented, but should not be"
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert

@@ -2,8 +2,7 @@ from .pages.product_page import ProductPage
 import pytest
 from time import sleep
 
-link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
-promo_link = '?promo='
+
 
 
 class TestProductPage:
@@ -13,6 +12,9 @@ class TestProductPage:
                               pytest.param("offer7", marks=pytest.mark.xfail),
                               "offer8", "offer9"])
     def test_guest_can_add_product_to_basket(self, browser, promo_offer):
+        link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+        promo_link = '?promo='
+
         page = ProductPage(browser, link + promo_link + promo_offer)
         page.open()
         page.add_to_basket()
@@ -20,3 +22,10 @@ class TestProductPage:
         page.check_success_alert_present()
         page.check_product_and_alert_same()
         page.check_product_and_basket_price_same()
+
+    def test_guest_should_see_login_link_on_product_page(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_login_link()
