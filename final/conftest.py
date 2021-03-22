@@ -2,11 +2,13 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default='ru',
                      help='Select: desired locale')
     parser.addoption('--browser_name', action='store', default='chrome',
                      help='Select: chrome or firefox')
+
 
 @pytest.fixture(scope="function")
 def browser(request):
@@ -25,4 +27,3 @@ def browser(request):
         raise pytest.UsageError('--browser_name unrecognized or language is incorrect')
     yield browser
     browser.quit()
-
