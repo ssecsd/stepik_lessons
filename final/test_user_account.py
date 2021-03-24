@@ -1,8 +1,7 @@
 from pages.login_page import LoginPage
 from pages.account_page import AccountPage
-from pages.product_page import ProductPage
 from pages.locators import URLLocators
-from pages.basket_page import BasketPage
+import pytest
 
 
 class TestUserAccount:
@@ -63,3 +62,16 @@ class TestUserAccount:
         # Assert
         page.check_is_user_logged_in()
         page.check_registration_error()
+
+    @pytest.mark.parametrize('email_param',
+        ['email@test', '@test.com', 'example',
+         'email.@test.', 'email.x@test'])
+    def test_email_validation(self, browser, email_param):
+        # Arrange
+        page = LoginPage(browser, URLLocators.LOGIN_URL)
+        page.open()
+        # Act
+        page.email = email_param
+        page.register_new_user()
+        # Assert
+        page.check_is_user_logged_out()

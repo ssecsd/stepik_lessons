@@ -1,7 +1,6 @@
 from .base_page import BasePage
 from .locators import LoginPageLocators
 from .helpers import helper
-from datetime import datetime
 
 
 class LoginPage(BasePage):
