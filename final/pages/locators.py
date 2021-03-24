@@ -14,9 +14,11 @@ class URLLocators:
     LOGIN_PATH = '/accounts/login/'
     ACCOUNT_PATH = '/accounts/profile/'
     BASKET_PATH = '/basket/'
+    PRODUCT_PATH = '/catalogue/coders-at-work_207/'
     LOGIN_URL = MAIN_URL + LOGIN_PATH
     ACCOUNT_URL = MAIN_URL + ACCOUNT_PATH
     BASKET_URL = MAIN_URL + BASKET_PATH
+    PRODUCT_URL = MAIN_URL + PRODUCT_PATH
 
 
 class MainPageLocators(BasePageLocators):
@@ -51,10 +53,16 @@ class ProductPageLocators(BasePageLocators):
 class BasketPageLocators(BasePageLocators):
     BASKET_ALERT = (By.CSS_SELECTOR, '.alertinner')
     BASKET_CONTENT = (By.CSS_SELECTOR, '.content > #content_inner')
-    BASKET_VIEW_BASKET_BUTTON = (By.CSS_SELECTOR, 'p:nth-child(2) >a:nth-child(1)')
-    BASKET_CHECKOUT_BUTTON = (By.CSS_SELECTOR, 'p:nth-child(2) >a:nth-child(2)')
+    BASKET_COUPON_BUTTON = (By.CSS_SELECTOR, '#voucher_form_link')
+    BASKET_CHECKOUT_BUTTON = (By.CSS_SELECTOR, '.clearfix a')
     BASKET_ORDER_TOTAL = (By.CSS_SELECTOR, '.total > .price_color')
     BASKET_EMPTY_MESSAGE = (By.CSS_SELECTOR, '#content_inner > p:nth-child(1)')
+    BASKET_ITEM_QUANTITY = (By.CSS_SELECTOR, '.checkout-quantity input')
+    BASKET_QUANTITY_UPDATE = (By.CSS_SELECTOR, '.checkout-quantity button')
+    BASKET_ITEM_PRICE = (By.CSS_SELECTOR, '.basket-items div:nth-child(4)')
+    BASKET_ITEM_TOTAL_PRICE = (By.CSS_SELECTOR, '.basket-items div:nth-child(5)')
+    BASKET_ITEM_DELETE = (By.CSS_SELECTOR, '[data-behaviours="remove"]')
+    BASKET_ITEM_NAMES = (By.CSS_SELECTOR, '.basket-items div:nth-child(2) a')
 
 
 class AccountPageLocators(BasePageLocators):

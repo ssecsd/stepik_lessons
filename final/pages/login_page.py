@@ -1,6 +1,6 @@
 from .base_page import BasePage
 from .locators import LoginPageLocators
-from .helpers import credhelper
+from .helpers import helper
 from datetime import datetime
 
 
@@ -8,9 +8,9 @@ class LoginPage(BasePage):
 
     def __init__(self, browser, timeout=10):
         super().__init__(browser, timeout)
-        self.valid_password = credhelper.get_valid_password()
-        self.invalid_password = credhelper.get_weak_password()
-        self.email = credhelper.generate_valid_email()
+        self.valid_password = helper.get_valid_password()
+        self.invalid_password = helper.get_weak_password()
+        self.email = helper.generate_valid_email()
 
     def check_is_login_page(self):
         self.check_is_login_url()

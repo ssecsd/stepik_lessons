@@ -1,7 +1,8 @@
 from pages.login_page import LoginPage
 from pages.account_page import AccountPage
+from pages.product_page import ProductPage
 from pages.locators import URLLocators
-from time import sleep
+from pages.basket_page import BasketPage
 
 
 class TestUserAccount:
